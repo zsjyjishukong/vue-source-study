@@ -1,22 +1,26 @@
+let Dep = require("./Dep.js")
+
 function defineReactive(data, key, val) {
+  let dep = new Dep()
   Object.defineProperty(data, key, {
     enumerable: true,
     configurable: true,
     get: function () {
+      dep.depend()
       return val
     },
     set: function (newVal) {
       if (val === newVal) {
         return
-      } else {
-        val = newVal
       }
+      val = newVal
+      dep.notify()
     }
   })
 }
-let a = {};
+
+let a = {}
 defineReactive(a, 'hello', 'world')
 console.log(a.hello)
-a.hello = 6
+a.hello = 'hi'
 console.log(a.hello)
-
