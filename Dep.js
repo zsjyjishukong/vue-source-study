@@ -1,4 +1,4 @@
-module.exports =  class Dep {
+export default class Dep {
   constructor() {
     this.subs = []
   }

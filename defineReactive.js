@@ -1,6 +1,6 @@
-import Dep from "./Dep";
+import Dep from "./Dep"
 
-function defineReactive(data, key, val) {
+export function defineReactive(data, key, val) {
   let dep = new Dep()
   Object.defineProperty(data, key, {
     enumerable: true,
@@ -18,9 +18,3 @@ function defineReactive(data, key, val) {
     }
   })
 }
-
-let a = {}
-defineReactive(a, 'hello', 'world')
-console.log(a.hello)
-a.hello = 'hi'
-console.log(a.hello)
