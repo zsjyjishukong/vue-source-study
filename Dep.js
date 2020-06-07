@@ -12,8 +12,8 @@ export default class Dep {
   }
 
   depend () {
-    if (global) {
-      this.addSub(global)
+    if (window) {
+      this.addSub(window)
     }
   }
 

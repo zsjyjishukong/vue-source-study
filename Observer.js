@@ -4,12 +4,19 @@
  * 来收集属性的依赖，并且当属性发生变化时会通知这些依赖
  */
 import Dep from "./Dep";
+import {arrayMethods} from "./arrayObserver";
 
+// proto 是否可用
+const hasProto = '__proto__' in {}
+const arrayKeys = Object.getOwnPropertyNames(arrayMethods)
 export class Observer {
   constructor(value) {
     this.value = value
 
-    if (!Array.isArray(value)) {
+    if (Array.isArray(value)) {
+      const augment = hasProto ? protoAugment : copyAugment
+      augment(value, arrayMethods, arrayKeys)
+    } else {
       this.walk(value)
     }
   }
@@ -45,4 +52,15 @@ function defineReactive(data, key, val){
       dep.notify()
     }
   })
+}
+
+function protoAugment(target, src, keys) {
+  target.__proto__ = src
+}
+
+function copyAugment(target, src, keys) {
+  for (let i = 0, l = keys.length; i < l; i++) {
+    const key = keys[i]
+    def(target, key, src[key])
+  }
 }

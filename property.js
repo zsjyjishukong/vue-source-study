@@ -1,4 +1,4 @@
-import Dep from "./Dep";
+import Dep from "./Dep.js";
 
 function defineReactive(data, key, val) {
   let dep = new Dep()
